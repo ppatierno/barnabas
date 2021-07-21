@@ -12,7 +12,6 @@ import io.strimzi.systemtest.SetupClusterOperator;
 import io.strimzi.systemtest.annotations.IsolatedTest;
 import io.strimzi.systemtest.resources.crd.KafkaResource;
 import io.strimzi.systemtest.resources.crd.kafkaclients.KafkaBasicExampleClients;
-import io.strimzi.systemtest.resources.operator.BundleResource;
 import io.strimzi.systemtest.templates.crd.KafkaTemplates;
 import io.strimzi.systemtest.templates.crd.KafkaTopicTemplates;
 import io.strimzi.systemtest.utils.ClientUtils;
@@ -346,15 +345,21 @@ public class KafkaUpgradeDowngradeST extends AbstractST {
 
     @BeforeAll
     void setup(ExtensionContext extensionContext) {
-        install.prepareEnvForOperator(extensionContext, NAMESPACE);
+        install = new SetupClusterOperator.SetupClusterOperatorBuilder()
+            .withExtensionContext(extensionContext)
+            .withNamespace(NAMESPACE)
+            .createInstallation()
+            .runBundleInstallation();
 
-        SetupClusterOperator.applyBindings(extensionContext, NAMESPACE);
-        // 060-Deployment
-        resourceManager.createResource(extensionContext,
-            new BundleResource.BundleResourceBuilder()
-                .withNamespace(NAMESPACE)
-                .buildBundleInstance()
-                .buildBundleDeployment()
-                .build());
+//        install.prepareEnvForOperator(extensionContext, NAMESPACE);
+//
+//        install.applyBindings(extensionContext, NAMESPACE);
+//        // 060-Deployment
+//        resourceManager.createResource(extensionContext,
+//            new BundleResource.BundleResourceBuilder()
+//                .withNamespace(NAMESPACE)
+//                .buildBundleInstance()
+//                .buildBundleDeployment()
+//                .build());
     }
 }
