@@ -11,8 +11,6 @@ import io.strimzi.systemtest.SetupClusterOperator;
 import io.strimzi.systemtest.annotations.IsolatedTest;
 import io.strimzi.systemtest.templates.crd.KafkaTemplates;
 import io.strimzi.systemtest.utils.kafkaUtils.KafkaUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
@@ -31,8 +29,6 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 class NamespaceRbacScopeOperatorST extends AbstractST {
 
     static final String NAMESPACE = "roles-only-cluster-test";
-
-    private static final Logger LOGGER = LogManager.getLogger(NamespaceRbacScopeOperatorST.class);
 
     @IsolatedTest("This test case needs own Cluster Operator")
     void testNamespacedRbacScopeDeploysRoles(ExtensionContext extensionContext) {
